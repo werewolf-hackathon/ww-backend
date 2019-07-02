@@ -22,21 +22,37 @@ server.get('/', (req, res) => {
   res.json({success: 'You might just be sane!'});
 });
 
-io.on('connection', socket => {
-  console.log('A user connected.');
+server.get('/chat', function(req, res) {
+  res.sendFile(__dirname + '/index.html')
+})
 
-  socket.on('openChat', history => {
-    // open chatbox
+io.on('connection', function(socket){
+  console.log('a user connected')
+
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
   });
 
-  socket.on('sendMessage', message => {
-    // send message
-  });
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected.');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
   });
 });
+
+// io.on('connection', socket => {
+//   console.log('A user connected.');
+
+//   socket.on('openChat', history => {
+//     // open chatbox
+//   });
+
+//   socket.on('sendMessage', message => {
+//     // send message
+//   });
+
+//   socket.on('disconnect', () => {
+//     console.log('A user disconnected.');
+//   });
+// });
 
 const PORT = process.env.PORT || 8000;
 http.listen(PORT, () => console.log(`Server listening on port ${PORT}.`));
