@@ -42,7 +42,6 @@ router.post('/login', validateUser, async (req, res) => {
 
 router.put('/:id', validateUserId, validateUserData, async (req, res) => {
     try {
-        console.log('check', req.validUser.id, req.validUserData)
         const updatedUser = await Users.update(req.validUser.id, req.validInput)
         res.status(201).json(updatedUser)
     } catch (error) {
