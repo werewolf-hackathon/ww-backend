@@ -5,7 +5,7 @@ const forEachFile = (dirname, pathway, callback) => {
   // Cleans up .js extensions, filters out index.js files,
   // and then applies the provided callback.
   files
-    .map(file => file.slice(-2) == 'js' ? file.slice(0, -3) : file )
+    .map(file => (file.slice(-2) == 'js' ? file.slice(0, -3) : file))
     .filter(file => file != 'index')
     .forEach(callback);
 };
